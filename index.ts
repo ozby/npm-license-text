@@ -104,7 +104,7 @@ function cleanLicenses(licenseJson: any): void {
     return newLicenseJson
 }
 
-export default async function (inputDir: string, onlyDirectDependencies: boolean = true): Promise<void> {
+export default async function (inputDir: string, onlyDirectDependencies: boolean = true): Promise<Array<Object>> {
     console.log(onlyDirectDependencies);
     console.error(`Generating licenses for npm packages under ${inputDir}`)
     const dumpLicenses = thenify(crawler.dumpLicenses)
@@ -115,5 +115,5 @@ export default async function (inputDir: string, onlyDirectDependencies: boolean
     })
 
     licenseJson = cleanLicenses(licenseJson)
-    console.log(await getNpmLicenses(licenseJson));
+    return await getNpmLicenses(licenseJson)
 }

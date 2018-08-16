@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "got": "^8.0.2",
+    "mz": "^2.7.0",
     "npm-license-crawler": "^0.1.5",
     "thenify": "^3.3.0"
   }

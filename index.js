@@ -11,17 +11,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const crawler = require('npm-license-crawler');
 const thenify = require('thenify');
+const fs = require("mz/fs");
 const got = require("got");
-function getNpmLicenses(licenseJson) {
+function writeLicenses(licenseJson, outputDir) {
     return __awaiter(this, void 0, void 0, function* () {
         let result = [];
         for (let p of Object.keys(licenseJson)) {
             let info = licenseJson[p];
             let license = yield fetchLicense(p, info.licenses, info.licenseUrl, info.repository);
             // await fs.write(o, `# ${p}\n\n${license}\n\n`)
-            result.push({ name: p.split('@')[0], license });
+            result.push({ name: p.split("@")[0], license });
         }
-        return result;
+        fs.writeFile(outputDir, JSON.stringify(result), "utf8", function (err) {
+            if (err) {
+                return console.log(err);
+            }
+            console.log("The file is saved!");
+        });
     });
 }
 const overrides = new Map([
@@ -101,7 +107,7 @@ function cleanLicenses(licenseJson) {
     });
     return newLicenseJson;
 }
-function default_1(inputDir, onlyDirectDependencies = true) {
+function default_1(inputDir, outputDir, onlyDirectDependencies = true) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log(onlyDirectDependencies);
         console.error(`Generating licenses for npm packages under ${inputDir}`);
@@ -111,7 +117,7 @@ function default_1(inputDir, onlyDirectDependencies = true) {
             onlyDirectDependencies: onlyDirectDependencies,
         });
         licenseJson = cleanLicenses(licenseJson);
-        return yield getNpmLicenses(licenseJson);
+        yield writeLicenses(licenseJson, outputDir);
     });
 }
 exports.default = default_1;

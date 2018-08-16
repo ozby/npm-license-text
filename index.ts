@@ -2,17 +2,25 @@
 
 const crawler = require('npm-license-crawler')
 const thenify = require('thenify')
+import * as fs from 'mz/fs'
 import * as got from 'got'
 
-async function getNpmLicenses(licenseJson: any): Promise<Array<Object>> {
+async function writeLicenses(licenseJson: any, outputDir: string): Promise<void> {
     let result = [];
     for (let p of Object.keys(licenseJson)) {
         let info = licenseJson[p]
-        let license = await fetchLicense(p, info.licenses, info.licenseUrl, info.repository)
-        // await fs.write(o, `# ${p}\n\n${license}\n\n`)
-        result.push({name: p.split('@')[0], license});
+      let license = await fetchLicense(p, info.licenses, info.licenseUrl, info.repository);
+      // await fs.write(o, `# ${p}\n\n${license}\n\n`)
+      result.push({ name: p.split("@")[0], license });
     }
-    return result;
+
+    fs.writeFile(outputDir, JSON.stringify(result), "utf8", function(err) {
+      if (err) {
+        return console.log(err);
+      }
+
+      console.log("The file is saved!");
+    });
 }
 
 const overrides = new Map<string, string>([
@@ -104,7 +112,7 @@ function cleanLicenses(licenseJson: any): void {
     return newLicenseJson
 }
 
-export default async function (inputDir: string, onlyDirectDependencies: boolean = true): Promise<Array<Object>> {
+export default async function (inputDir: string, outputDir: string, onlyDirectDependencies: boolean = true): Promise<void> {
     console.log(onlyDirectDependencies);
     console.error(`Generating licenses for npm packages under ${inputDir}`)
     const dumpLicenses = thenify(crawler.dumpLicenses)
@@ -115,5 +123,5 @@ export default async function (inputDir: string, onlyDirectDependencies: boolean
     })
 
     licenseJson = cleanLicenses(licenseJson)
-    return await getNpmLicenses(licenseJson)
+    await writeLicenses(licenseJson, outputDir)
 }

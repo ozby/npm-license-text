@@ -1,5 +1,5 @@
 {
-  "name": "npm-license-text",
+  "name": "npm-license-text-fetcher",
   "version": "1.0.3",
   "description": "Generate file with license text of all dependencies",
   "main": "index.js",
@@ -9,7 +9,7 @@
     "tsc": "tsc"
   },
   "bin": {
-    "npm-license-text": "./index.js"
+    "npm-license-text-fetcher": "./index.js"
   },
   "author": "Mattias Holmlund <mattias.holmlund@netinsight.net>",
   "license": "ISC",

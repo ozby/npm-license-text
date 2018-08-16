@@ -3,18 +3,16 @@
 const crawler = require('npm-license-crawler')
 const thenify = require('thenify')
 import * as got from 'got'
-import * as fs from 'mz/fs'
 
-let failures = 0
-
-async function writeNpmLicenseTxt(licenseJson: any, outputFile: string): Promise<void> {
-    let o = await fs.open(outputFile, 'w')
+async function getNpmLicenses(licenseJson: any): Promise<Array<Object>> {
+    let result = [];
     for (let p of Object.keys(licenseJson)) {
         let info = licenseJson[p]
         let license = await fetchLicense(p, info.licenses, info.licenseUrl, info.repository)
-        await fs.write(o, `# ${p}\n\n${license}\n\n`)
+        // await fs.write(o, `# ${p}\n\n${license}\n\n`)
+        result.push({name: p.split('@')[0], license});
     }
-    await fs.close(o)
+    return result;
 }
 
 const overrides = new Map<string, string>([
@@ -88,7 +86,6 @@ async function fetchLicense(
     } catch (e) {}
 
     console.error(`Failed to find license for ${module}`)
-    failures++
     return ''
 }
 
@@ -107,29 +104,16 @@ function cleanLicenses(licenseJson: any): void {
     return newLicenseJson
 }
 
-async function run(): Promise<void> {
-    if (process.argv.length !== 4) {
-        console.error('Usage: npm-license-text <inputDir> <outputFile>')
-        process.exit(1)
-    }
-
-    const [, , inputDir, outputFile] = process.argv
+export default async function (inputDir: string, onlyDirectDependencies: boolean = true): Promise<void> {
+    console.log(onlyDirectDependencies);
     console.error(`Generating licenses for npm packages under ${inputDir}`)
     const dumpLicenses = thenify(crawler.dumpLicenses)
 
     let licenseJson = await dumpLicenses({
         start: inputDir,
+        onlyDirectDependencies: onlyDirectDependencies,
     })
 
     licenseJson = cleanLicenses(licenseJson)
-    await writeNpmLicenseTxt(licenseJson, outputFile)
+    console.log(await getNpmLicenses(licenseJson));
 }
-
-run()
-    .catch((err) => {
-        console.error(err)
-        failures++
-    })
-    .then(() => {
-        process.exit(failures ? 1 : 0)
-    })

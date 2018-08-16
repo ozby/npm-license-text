@@ -1,5 +1,5 @@
 {
-  "name": "npm-licenses-as-json",
+  "name": "npm-license-text",
   "version": "1.0.3",
   "description": "Generate file with license text of all dependencies",
   "main": "index.js",

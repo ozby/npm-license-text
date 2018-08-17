@@ -1,6 +1,6 @@
 {
   "name": "npm-license-text-fetcher",
-  "version": "1.0.3",
+  "version": "0.0.1",
   "description": "Generate file with license text of all dependencies",
   "main": "index",
   "scripts": {

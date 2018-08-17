@@ -2,21 +2,20 @@
   "name": "npm-license-text-fetcher",
   "version": "1.0.3",
   "description": "Generate file with license text of all dependencies",
-  "main": "index.js",
+  "main": "index",
   "scripts": {
     "prepare": "npm run tsc",
     "test": "tslint -t stylish -p tsconfig.json",
     "tsc": "tsc"
   },
   "bin": {
-    "npm-license-text-fetcher": "./index.js"
+    "npm-license-text-fetcher": "./index"
   },
   "author": "Mattias Holmlund <mattias.holmlund@netinsight.net>",
   "license": "ISC",
-  "repository" :
-    {
-      "type" : "git",
-      "url" : "https://github.com/ozby/npm-license-text"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ozby/npm-license-text"
   },
   "devDependencies": {
     "@types/got": "^7.1.6",
@@ -26,6 +25,7 @@
     "typescript": "^2.6.2"
   },
   "dependencies": {
+    "@types/mz": "0.0.32",
     "got": "^8.0.2",
     "mz": "^2.7.0",
     "npm-license-crawler": "^0.1.5",

@@ -2,14 +2,14 @@
   "name": "npm-license-text-fetcher",
   "version": "0.0.1",
   "description": "Generate file with license text of all dependencies",
-  "main": "index",
+  "main": "index.js",
   "scripts": {
     "prepare": "npm run tsc",
     "test": "tslint -t stylish -p tsconfig.json",
     "tsc": "tsc"
   },
   "bin": {
-    "npm-license-text-fetcher": "./index"
+    "npm-license-text-fetcher": "./index.js"
   },
   "author": "Mattias Holmlund <mattias.holmlund@netinsight.net>",
   "license": "ISC",

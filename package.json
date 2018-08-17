@@ -15,7 +15,7 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ozby/npm-license-text"
+    "url": "https://github.com/ozby/npm-license-text-fetcher"
   },
   "devDependencies": {
     "@types/got": "^7.1.6",

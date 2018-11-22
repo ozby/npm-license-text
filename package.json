@@ -1,6 +1,6 @@
 {
   "name": "@btx/npm-license-text-fetcher",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Generate file with license text of all dependencies",
   "main": "index.js",
   "scripts": {

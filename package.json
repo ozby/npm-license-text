@@ -1,15 +1,13 @@
 {
   "name": "@btx/npm-license-text-fetcher",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Generate file with license text of all dependencies",
   "main": "index.js",
   "scripts": {
-    "prepare": "npm run tsc",
+    "start": "babel-node --extensions '.ts,.tsx' index.ts",
+    "tester": "babel-node --extensions '.ts,.tsx' test.ts",
     "test": "tslint -t stylish -p tsconfig.json",
     "tsc": "tsc"
-  },
-  "bin": {
-    "npm-license-text-fetcher": "./index.js"
   },
   "author": "Mattias Holmlund <mattias.holmlund@netinsight.net>",
   "license": "ISC",
@@ -18,6 +16,8 @@
     "url": "https://github.com/ozby/npm-license-text-fetcher"
   },
   "devDependencies": {
+    "@babel/core": "^7.1.6",
+    "@babel/node": "^7.0.0",
     "@types/got": "^7.1.6",
     "@types/node": "^9.3.0",
     "prettier": "^1.10.2",
@@ -25,7 +25,10 @@
     "typescript": "^2.6.2"
   },
   "dependencies": {
+    "@babel/preset-env": "^7.1.6",
+    "@babel/preset-typescript": "^7.1.0",
     "@types/mz": "0.0.32",
+    "babel-core": "^7.0.0-bridge.0",
     "got": "^8.0.2",
     "mz": "^2.7.0",
     "npm-license-crawler": "^0.1.5",
